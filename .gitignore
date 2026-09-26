@@ -1,0 +1,14 @@
+# Entorno virtual
+entorno_pdi/
+pdi_tp1_env/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
