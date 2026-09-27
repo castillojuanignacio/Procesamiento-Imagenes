@@ -1008,3 +1008,65 @@ for nro in range(1, 6):
 
 # --- Imagen final de resultados ---------------------------------
 
+# Colores según condición (verde = aprobado, rojo = no aprobado)
+COLOR_APROBADO = (0.0, 0.55, 0.0)
+COLOR_DESAPROBADO = (0.75, 0.0, 0.0)
+
+
+def colorear_nombre(nombre_bin, color):
+    """
+    Convierte el recorte binario del campo Name (0 = fondo,
+    1 = tinta) en una imagen RGB con fondo blanco y el texto
+    pintado del color indicado.
+    """
+    alto, ancho = nombre_bin.shape
+    imagen_rgb = np.ones((alto, ancho, 3))
+    imagen_rgb[nombre_bin == 1] = color
+
+    return imagen_rgb
+
+
+# Uno los nombres aprobados y desaprobados en un solo listado,
+# guardando junto a cada uno el color y la etiqueta que le
+# corresponden.
+todos_los_nombres = []
+
+for nombre in nombres_aprobados:
+    todos_los_nombres.append((nombre, COLOR_APROBADO, "APROBADO"))
+
+for nombre in nombres_desaprobados:
+    todos_los_nombres.append((nombre, COLOR_DESAPROBADO, "DESAPROBADO"))
+
+n_alumnos = len(todos_los_nombres)
+
+fig, axes = plt.subplots(
+    n_alumnos, 1,
+    figsize=(6, 1.3 * n_alumnos + 1)
+)
+
+if n_alumnos == 1:
+    axes = [axes]
+
+fig.suptitle(
+    "Verde: Aprobado   |   Rojo: No aprobado",
+    fontsize=14,
+    fontweight="bold"
+)
+
+for idx, (nombre, color, resultado) in enumerate(todos_los_nombres):
+
+    imagen_nombre = colorear_nombre(nombre, color)
+
+    ax = axes[idx]
+    ax.imshow(imagen_nombre)
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_title(
+        resultado,
+        fontsize=9,
+        color=color
+    )
+
+plt.tight_layout(rect=[0, 0, 1, 0.94])
+guardar_figura("p2_resumen_alumnos")
+plt.show(block=True)

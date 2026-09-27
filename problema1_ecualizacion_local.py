@@ -81,8 +81,6 @@ plt.show(block=True)
 
 # --- Ecualización global -------------
 
-# --- Ecualizacion global (para comparar contra la local mas adelante) ---
-
 img_global = cv2.equalizeHist(img)
 
 hist_global, _ = np.histogram(img_global.flatten(), 256, [0, 256])
