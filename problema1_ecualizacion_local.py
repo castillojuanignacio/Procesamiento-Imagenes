@@ -1,6 +1,21 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+# --- Carpeta de resultados ----------------------------------------
+
+CARPETA_RESULTADOS = "Imagenes-Resultados"
+os.makedirs(CARPETA_RESULTADOS, exist_ok=True)
+
+
+def guardar_figura(nombre):
+    plt.savefig(
+        os.path.join(CARPETA_RESULTADOS, nombre + ".png"),
+        dpi=150,
+        bbox_inches="tight"
+    )
+
 
 # --- Cargo imagen --------------------------------------------------
 img = cv2.imread(
@@ -49,6 +64,7 @@ plt.figure()
 h = plt.imshow(img, cmap="gray", vmin=0, vmax=255)
 plt.colorbar(h)
 plt.title("Imagen original")
+guardar_figura("p1_imagen_original")
 plt.show(block=True)
 
 # --- Histograma de la imagen original -----------------------------
@@ -60,6 +76,7 @@ plt.plot(hist)
 plt.title("Histograma de la imagen original")
 plt.xlabel("Nivel de intensidad")
 plt.ylabel("Cantidad de pixeles")
+guardar_figura("p1_histograma_original")
 plt.show(block=True)
 
 # --- Prueba de ecualización en una ventana local ------------------
@@ -87,6 +104,7 @@ plt.figure()
 plt.imshow(ventana, cmap="gray", vmin=0, vmax=255)
 plt.title("Ventana local 31 x 31")
 plt.colorbar()
+guardar_figura("p1_ventana_local_31x31")
 plt.show(block=True)
 
 # --- Histograma local ---------------------------------------------
@@ -125,6 +143,7 @@ plt.title("CDF local")
 plt.xlabel("Nivel de intensidad")
 plt.ylabel("Probabilidad acumulada")
 
+guardar_figura("p1_histograma_cdf_local")
 plt.show(block=True)
 
 # --- Ecualización local de histograma -----------------------------
@@ -198,6 +217,7 @@ plt.title("Ecualización local 31 x 31")
 plt.xticks([])
 plt.yticks([])
 
+guardar_figura("p1_original_vs_ecualizada_31x31")
 plt.show(block=True)
 
 # --- Comparación 2---------------------------------------------------
@@ -229,6 +249,7 @@ plt.imshow(img_local_63, cmap="gray", vmin=0, vmax=255)
 plt.title("Ventana 63 x 63")
 plt.xticks([]), plt.yticks([])
 
+guardar_figura("p1_comparacion_ventanas")
 plt.show(block=True)
 
 '''

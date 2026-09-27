@@ -1,6 +1,21 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+# --- Carpeta de resultados ----------------------------------------
+
+CARPETA_RESULTADOS = "Imagenes-Resultados"
+os.makedirs(CARPETA_RESULTADOS, exist_ok=True)
+
+
+def guardar_figura(nombre):
+    plt.savefig(
+        os.path.join(CARPETA_RESULTADOS, nombre + ".png"),
+        dpi=150,
+        bbox_inches="tight"
+    )
+
 
 # --- Cargo el examen ----------------------------------------------
 
@@ -48,6 +63,7 @@ plt.figure()
 plt.imshow(img, cmap="gray", vmin=0, vmax=255)
 plt.title("Examen 2")
 plt.colorbar()
+guardar_figura("p2_examen_original")
 plt.show(block=True)
 
 # --- Umbralado -----------------------------------------------------
@@ -78,6 +94,7 @@ plt.title(f"Umbralado - Otsu T={T_otsu:.0f}")
 plt.xticks([])
 plt.yticks([])
 
+guardar_figura("p2_umbralado_otsu")
 plt.show(block=True)
 
 # --- Imagen binaria para análisis --------------------------------
@@ -94,6 +111,7 @@ plt.plot(suma_filas)
 plt.title("Cantidad de píxeles oscuros por fila")
 plt.xlabel("Fila")
 plt.ylabel("Cantidad de píxeles oscuros")
+guardar_figura("p2_pixeles_oscuros_por_fila")
 plt.show(block=True)
 
 
@@ -104,6 +122,7 @@ plt.plot(suma_columnas)
 plt.title("Cantidad de píxeles oscuros por columna")
 plt.xlabel("Columna")
 plt.ylabel("Cantidad de píxeles oscuros")
+guardar_figura("p2_pixeles_oscuros_por_columna")
 plt.show(block=True)
 
 # --- Detección de líneas ------------------------------------------
@@ -201,6 +220,7 @@ for i in range(10):
     plt.yticks([])
 
 plt.tight_layout()
+guardar_figura("p2_preguntas")
 plt.show(block=True)
 
 # --- Función para extraer las respuestas de una pregunta ----------
@@ -326,6 +346,7 @@ for i in range(len(componentes)):
     plt.title(f"Letra aislada {i + 1}")
     plt.xticks([])
     plt.yticks([])
+    guardar_figura(f"p2_letra_aislada_{i + 1}")
     plt.show(block=True)
 
 
@@ -377,7 +398,7 @@ def contar_huecos(letra):
 
 def reconocer_letra(componente):
 
-    x, y, ancho, alto, area, letra = componente
+    x, y, ancho, alto,      area, letra = componente
 
     huecos = contar_huecos(letra)
 
@@ -470,6 +491,7 @@ plt.imshow(encabezado, cmap="gray", vmin=0, vmax=255)
 plt.title("Encabezado")
 plt.xticks([])
 plt.yticks([])
+guardar_figura("p2_encabezado")
 plt.show(block=True)
 
 
@@ -556,6 +578,7 @@ for i in range(3):
     plt.yticks([])
 
 plt.tight_layout()
+guardar_figura("p2_campos_encabezado")
 plt.show(block=True)
 
 # --- Análisis de componentes de los campos -----------------------
