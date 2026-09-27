@@ -79,6 +79,37 @@ plt.ylabel("Cantidad de pixeles")
 guardar_figura("p1_histograma_original")
 plt.show(block=True)
 
+# --- Ecualización global -------------
+
+# --- Ecualizacion global (para comparar contra la local mas adelante) ---
+
+img_global = cv2.equalizeHist(img)
+
+hist_global, _ = np.histogram(img_global.flatten(), 256, [0, 256])
+
+plt.figure()
+
+ax1 = plt.subplot(121)
+plt.imshow(img, cmap="gray", vmin=0, vmax=255)
+plt.title("Imagen original")
+plt.xticks([]), plt.yticks([])
+
+plt.subplot(122, sharex=ax1, sharey=ax1)
+plt.imshow(img_global, cmap="gray", vmin=0, vmax=255)
+plt.title("Ecualizacion global")
+plt.xticks([]), plt.yticks([])
+
+guardar_figura("p1_original_vs_ecualizacion_global")
+plt.show(block=True)
+
+plt.figure()
+plt.plot(hist_global)
+plt.title("Histograma de la imagen ecualizada globalmente")
+plt.xlabel("Nivel de intensidad")
+plt.ylabel("Cantidad de pixeles")
+guardar_figura("p1_histograma_global")
+plt.show(block=True)
+
 # --- Prueba de ecualización en una ventana local ------------------
 
 M = 31
