@@ -20,42 +20,9 @@ def guardar_figura(nombre):
 # --- Cargo el examen ----------------------------------------------
 
 img = cv2.imread(
-    "Imagenes/examen_1.png",
+    "Imagenes/examen_2.png",
     cv2.IMREAD_GRAYSCALE
 )
-
-# --- Exploración inicial -------------------------------------------
-
-# Tipo de objeto
-print("Tipo:", type(img))
-
-# Dimensiones
-print("Shape:", img.shape)
-
-h, w = img.shape
-print("Alto:", h, "pixeles")
-print("Ancho:", w, "pixeles")
-
-# Tipo de dato
-print("Tipo de dato:", img.dtype)
-
-# Cantidad total de píxeles
-print("Cantidad de pixeles:", img.size)
-
-# Valores mínimo y máximo
-print("Intensidad minima:", img.min())
-print("Intensidad maxima:", img.max())
-
-# Valores de gris presentes
-pix_vals = np.unique(img)
-
-print("Cantidad de niveles de gris presentes:", len(pix_vals))
-print("Valores de gris presentes:")
-print(pix_vals)
-
-# Estadísticas básicas
-print("Intensidad media:", np.mean(img))
-print("Desvio estandar:", np.std(img))
 
 # --- Visualización -------------------------------------------------
 
@@ -104,18 +71,18 @@ img_bin = np.uint8(img_th == 0)
 print("Valores de img_bin:", np.unique(img_bin))
 
 
-suma_filas = np.sum(img_bin, axis=1)
+suma_filas = np.sum(img_bin, axis=1) #Suma a lo largo de las filas 
 
 plt.figure()
 plt.plot(suma_filas)
 plt.title("Cantidad de píxeles oscuros por fila")
 plt.xlabel("Fila")
-plt.ylabel("Cantidad de píxeles oscuros")
+plt.ylabel("Cantidad de píxeles oscuros")    #estos son pixeles que originalmente eran oscuros, ahora son blancos por la binarizacion
 guardar_figura("p2_pixeles_oscuros_por_fila")
 plt.show(block=True)
 
 
-suma_columnas = np.sum(img_bin, axis=0)
+suma_columnas = np.sum(img_bin, axis=0) #Suma a lo largo de las columnas
 
 plt.figure()
 plt.plot(suma_columnas)
@@ -333,23 +300,6 @@ for nro in range(10):
             "| area:", area
         )
 
-# --- Prueba: mostrar la letra aislada de la pregunta 1 ------------
-
-componentes, zona = extraer_componentes_respuesta(preguntas[0])
-
-for i in range(len(componentes)):
-
-    letra = componentes[i][5]
-
-    plt.figure()
-    plt.imshow(letra, cmap="gray")
-    plt.title(f"Letra aislada {i + 1}")
-    plt.xticks([])
-    plt.yticks([])
-    guardar_figura(f"p2_letra_aislada_{i + 1}")
-    plt.show(block=True)
-
-
 
 # --- Contar huecos de una letra -----------------------------------
 
@@ -417,63 +367,6 @@ def reconocer_letra(componente):
             return "D"
 
     return "Desconocida"
-
-# --- Respuestas correctas -----------------------------------------
-
-respuestas_correctas = [
-    "C", "B", "A", "D", "B",
-    "B", "A", "B", "D", "D"
-]
-
-# --- Corrección de las respuestas --------------------------------
-
-aciertos = 0
-
-for nro in range(10):
-
-    componentes, zona = extraer_componentes_respuesta(
-        preguntas[nro]
-    )
-
-    print("\nPregunta", nro + 1)
-
-    if len(componentes) == 0:
-
-        print("Sin respuesta")
-        print("Resultado: MAL")
-
-    elif len(componentes) > 1:
-
-        print("Más de una respuesta")
-        print("Resultado: MAL")
-
-    else:
-
-        respuesta = reconocer_letra(componentes[0])
-        correcta = respuestas_correctas[nro]
-
-        print("Respuesta detectada:", respuesta)
-        print("Respuesta correcta:", correcta)
-
-        if respuesta == correcta:
-            print("Resultado: OK")
-            aciertos += 1
-        else:
-            print("Resultado: MAL")
-
-print("\nCantidad de respuestas correctas:", aciertos)
-
-if aciertos >= 6:
-    print("Resultado final: APROBADO")
-else:
-    print("Resultado final: DESAPROBADO")
-
-
-
-
-
-
-
 
 
 
@@ -776,10 +669,6 @@ print("Class:", estado_class)
 
 
 
-
-
-
-
 def procesar_examen(ruta):
 
     img = cv2.imread(
@@ -970,8 +859,6 @@ def procesar_examen(ruta):
 
 # --- Procesamiento de todos los exámenes -------------------------
 
-resultados_examenes = []
-
 nombres_aprobados = []
 nombres_desaprobados = []
 
@@ -981,17 +868,6 @@ for nro in range(1, 6):
 
     aciertos, resultado, estado_name, estado_date, estado_class, nombre = \
         procesar_examen(ruta)
-
-    resultados_examenes.append(
-        (
-            nro,
-            aciertos,
-            resultado,
-            estado_name,
-            estado_date,
-            estado_class
-        )
-    )
 
     if resultado == "APROBADO":
         nombres_aprobados.append(nombre)
