@@ -37,6 +37,10 @@ Procesamiento-Imagenes/
 ├── Imagenes/
 │   ├── Imagen_con_detalles_escondidos.tif   # Imagen del Problema 1
 │   └── examen_1.png ... examen_5.png        # Exámenes del Problema 2
+├── Imagenes-Resultados/
+│   ├── p1_comparacion_ventanas.png          # Imagen de las ventanas en el Problema 1
+│   └── p2_resumen_alumnos.png               # Resultado de los Exámenes del Problema 2
+│   └── ...
 ├── problema1_ecualizacion_local.py          # Resolución del Problema 1
 ├── problema2_examen.py                      # Resolución del Problema 2
 ├── requirements.txt                         # Dependencias
